@@ -87,7 +87,7 @@ DATABASES = {
         "NAME": env("SQL_DATABASE"),
         "USER": env("SQL_USER"),
         "PASSWORD": env("SQL_PASSWORD"),
-        # "HOST": env("SQL_HOST"),
+        "HOST": env("SQL_HOST"),
         "PORT": env("SQL_PORT"),
     }
 }
