@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block lists %}
+    Добавить/Редактировать книгу
+{% endblock %}
+{% block content %}
+    <h1>Добавить/Редактировать книгу</h1>
+
+    <div class="container mb-3">
+        <form method="post" class="mt-3">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </form>
+    </div>
+
+{% endblock %}
