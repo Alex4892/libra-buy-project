@@ -24,5 +24,9 @@ class Migration(migrations.Migration):
                 ('price', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('create_at', models.DateTimeField(auto_now_add=True)),
             ],
+            options={
+                'verbose_name': 'Книга',
+                'verbose_name_plural': 'Книги',
+            },
         ),
     ]
