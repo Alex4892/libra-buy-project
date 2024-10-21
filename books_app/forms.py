@@ -7,7 +7,8 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = [
-            'name', 'author', 'genre', 'description', 'publication', 'publication_year', 'price'
+            'name', 'author', 'genre', 'description', 
+            'publication', 'publication_year', 'price', 'image'
         ]
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -17,4 +18,5 @@ class BookForm(forms.ModelForm):
             'publication': forms.TextInput(attrs={'class': 'form-control'}),
             'publication_year': forms.TextInput(attrs={'class': 'form-control'}),
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control', 'name': 'image'}),
         } 

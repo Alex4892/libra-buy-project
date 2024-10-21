@@ -45,6 +45,12 @@ class Book(models.Model):
         decimal_places=2,
         verbose_name = "Цена"
     )
+    image = models.ImageField(
+        upload_to='books/', 
+        blank=True,
+        null=True,
+        verbose_name="Изображения"
+    )
     create_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name = "Дата"
@@ -52,6 +58,11 @@ class Book(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def delete(self, *args, **kwargs):
+        if self.image:
+            self.image.delete()
+        super().delete(*args, **kwargs)
     
     class Meta:
         verbose_name = "Книга"
