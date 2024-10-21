@@ -31,7 +31,18 @@ def add_book_view(request):
             return redirect('books:index')
     else:
         form = BookForm()
-        
+    return render(request, 'books/add_book.html', context={'form': form})
+
+
+def edit_book_view(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    if request.method == "POST":
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('books:index')
+    else:
+        form = BookForm(instance=book)
     return render(request, 'books/add_book.html', context={'form': form})
 
 
