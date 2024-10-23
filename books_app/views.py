@@ -57,4 +57,7 @@ def delete_book_view(request, book_id):
         return redirect('books:index')
     return render(request, 'books/delete_book.html', {'book': book})
 
+
+
+
 # Create your views here.

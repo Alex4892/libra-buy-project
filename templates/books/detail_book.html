@@ -37,12 +37,36 @@
       <div class="d-flex justify-content-between">
         <h5 class="card-title">{{ comment }}</h5>
         <div class="btn-group mt-2" role="group">
-          <a href="#" class="btn btn-danger">Удалить</a>
-          <a href="#" class="btn btn-warning">Изменить</a>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Удалить</button>
+          <a href="{% url 'comments:edit_comment' comment.id book.id %}" class="btn btn-warning">Изменить</a>
         </div>
       </div>
       <p class="card-text">{{ comment.text }}</p>
     </div>
+
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h3 class="modal-title fs-5" id="exampleModalLabel">Удалить комментарий?</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Отмена</button>
+        <a href="{% url 'comments:delete_comment' comment.id book.id %}" class="btn btn-danger">Удалить</a>
+      </div>
+    </div>
+  </div>
+</div>
   {% endfor %}
 
   <div class="container mt-2 mb-2" style="width: 75%">
