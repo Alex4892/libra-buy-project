@@ -11,27 +11,27 @@
   </head>
   <body>
     <div class="container">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom border-3 mb-5">
             <div class="container-fluid">
               <a class="navbar-brand" href="{% url 'books:index' %}">Главная</a>
               <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+                  {% if user.is_authenticated %}
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'books:add_book' %}">Добавить книгу</a>
                   </li>
+                  {% endif %}
                 </ul>
               </div>
-              {% if user.is_authenticated %}
-                <ul class="navbar-nav float-sm-end">
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:profile' %}">Привет {% if user.first_name %} {{user.first_name}} {% else %} {{ user.username }} {% endif %}!</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:logout' %}">Выход</a>
-                  </li>
-                </ul>
-              {% else %}
               <ul class="navbar-nav float-sm-end">
+              {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'users:profile' %}">Привет {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}!</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'users:logout' %}">Выход</a>
+                </li>
+              {% else %}
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'users:login' %}">Войти</a>
                 </li>

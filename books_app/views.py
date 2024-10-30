@@ -15,9 +15,10 @@ def view_books(request):
 
 def view_detail_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
+    genres = book.genre.all()
     comments = book.comments.all()
     form = CommentForm()
-    genres = book.genre.all()
+    
     context = {
         "book": book,
         "genres": genres,
@@ -37,19 +38,20 @@ def add_book_view(request):
             return redirect('books:index')
     else:
         form = BookForm()
+        
     return render(request, 'books/add_book.html', context={'form': form})
 
 
 def edit_book_view(request, book_id):
     book = get_object_or_404(Book, id=book_id)
-    if request.method == "POST":
+    if request.method == 'POST':
         form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             form.save()
             return redirect('books:index')
     else:
-        form = BookForm(instance=book)
-    return render(request, 'books/add_book.html', context={'form': form})
+        form = BookForm(instance=book)    
+    return render(request, 'books/add_book.html', {'form': form})
 
 
 def delete_book_view(request, book_id):
@@ -59,7 +61,3 @@ def delete_book_view(request, book_id):
         return redirect('books:index')
     return render(request, 'books/delete_book.html', {'book': book})
 
-
-
-
-# Create your views here.
