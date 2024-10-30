@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block lists %}
+    Страница пользователя
+{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-around">
+    <div class="text-center">
+        <img src="{% if user.image %} 
+        {{ user.image.url }} 
+      {% else %} 
+        {% static 'img/default_avatar.png'%} 
+      {% endif %}" 
+        class="rounded-circle">
+    </div>
+    <div>
+        <h4>{{ user.first_name }}</h4>
+        <h4>{{ user.last_name }}</h4>
+        <h4>{{ user.father_name }}</h4>
+
+        <p>{{ user.email }}</p>
+        <p>{{ user.phone_number }}</p>
+
+        <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-primary m-1">Изменить данные</button>
+            <button type="button" class="btn btn-primary m-1">Изменить пароль</button>
+          </div>
+    </div>
+<div>
+<div class = "container">
+    <h2>Ваши книги</h2>
+    <table class="table mt-3 text-center">
+        <thead>
+          <tr>
+            <th scope="col">Название</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Количество</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {% for book in user_books %}
+            <td>{{ book.name }}</td>
+            <td>{{ book.price }}</td>
+            <td>{{ book.quantity }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+<div>
+
+{% endblock %}

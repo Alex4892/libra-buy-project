@@ -31,7 +31,9 @@ def add_book_view(request):
     if request.method == "POST":
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            book = form.save(commit=False)
+            book.seller = request.user
+            book.save()
             return redirect('books:index')
     else:
         form = BookForm()

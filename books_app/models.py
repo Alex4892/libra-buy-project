@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class Genre(models.Model):
     name = models.CharField(
@@ -16,6 +19,12 @@ class Genre(models.Model):
     
 
 class Book(models.Model):
+    seller = models.ForeignKey(
+        User,
+        related_name ="books",
+        on_delete = models.CASCADE,
+        verbose_name="Продавец"
+    )
     name = models.CharField(
         max_length=200,
         verbose_name = "Название"
@@ -39,6 +48,10 @@ class Book(models.Model):
     publication_year = models.CharField(
         max_length=4,
         verbose_name = "Год"
+    )
+    quantity = models.PositiveIntegerField(
+        default = 0,
+        verbose_name = "Количество"
     )
     price = models.DecimalField(
         max_digits=10,

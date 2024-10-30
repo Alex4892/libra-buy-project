@@ -8,7 +8,7 @@ class BookForm(forms.ModelForm):
         model = Book
         fields = [
             'name', 'author', 'genre', 'description', 
-            'publication', 'publication_year', 'price', 'image'
+            'publication', 'publication_year', 'quantity', 'price', 'image'
         ]
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -17,6 +17,7 @@ class BookForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control'}),
             'publication': forms.TextInput(attrs={'class': 'form-control'}),
             'publication_year': forms.TextInput(attrs={'class': 'form-control'}),
+            'quantity': forms.NumberInput(attrs={'class': 'form-control'}), 
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
             'image': forms.ClearableFileInput(attrs={'class': 'form-control', 'name': 'image'}),
         } 
