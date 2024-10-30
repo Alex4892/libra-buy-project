@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.db import transaction
 
 from .forms import CustomAuthenticationForm, CustomUserCreateForm
 from books_app.models import Book
 
-
+@transaction.atomic
 def register_user_view(request):
     if request.method == 'POST':
         form = CustomUserCreateForm(request.POST)
@@ -38,6 +40,7 @@ def logout_view(request):
     return redirect('books:index')
 
 
+@login_required(login_url='users:login')
 def view_profile(request):
     user_books = Book.objects.filter(seller=request.user)
     context = {

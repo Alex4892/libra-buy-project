@@ -19,10 +19,13 @@
     <p>Описание: {{ book.description }}</p>
     <p>Цена: {{ book.price }} руб</p>
 </div>
+
+{% if user.is_authenticated and user == book.seller %}
 <div class="btn-group mt-2" role="group">
   <a href="{% url 'books:delete_book' book.id %}" class="btn btn-danger">Удалить</a>
   <a href="{% url 'books:edit_book' book.id %}" class="btn btn-warning">Изменить</a>
 </div>
+{% endif %}
 
 <div class="card mt-3">
   <div class="card-header">
@@ -32,10 +35,12 @@
     <div class="card-body">
       <div class="d-flex justify-content-between">
         <h5 class="card-title">{{ comment }}</h5>
+        {% if user.is_authenticated and user == comment.author %}
         <div class="btn-group mt-2" role="group">
           <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Удалить</button>
           <a href="{% url 'comments:edit_comment' comment.id book.id %}" class="btn btn-warning">Изменить</a>
         </div>
+        {% endif %}
       </div>
       <p class="card-text">{{ comment.text }}</p>
     </div>

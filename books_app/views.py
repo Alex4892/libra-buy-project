@@ -1,4 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+
 
 from .models import Book
 from .forms import BookForm
@@ -27,7 +30,7 @@ def view_detail_book(request, book_id):
     }
     return render(request, "books/detail_book.html", context=context)
 
-
+@login_required(login_url='users:login')
 def add_book_view(request):
     if request.method == "POST":
         form = BookForm(request.POST, request.FILES)
@@ -42,20 +45,34 @@ def add_book_view(request):
     return render(request, 'books/add_book.html', context={'form': form})
 
 
+@login_required(login_url='users:login')
 def edit_book_view(request, book_id):
     book = get_object_or_404(Book, id=book_id)
+
+    if book.seller != request.user:
+        raise PermissionDenied(
+            "У вас нет прав на редактирование"
+        )
+
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             form.save()
-            return redirect('books:index')
+            return redirect('books/detail_book', book_id=book.id)
     else:
         form = BookForm(instance=book)    
     return render(request, 'books/add_book.html', {'form': form})
 
 
+@login_required(login_url='users:login')
 def delete_book_view(request, book_id):
     book = get_object_or_404(Book, id=book_id)
+
+    if book.seller != request.user:
+        raise PermissionDenied(
+            "У вас нет прав на удаление"
+        )
+
     if request.method == "POST":
         book.delete()
         return redirect('books:index')
