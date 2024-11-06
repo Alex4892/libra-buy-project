@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db import transaction
 
 from .forms import CustomAuthenticationForm, CustomUserCreateForm
 from books_app.models import Book
+from comments_app.models import Comment
 
 @transaction.atomic
 def register_user_view(request):
@@ -39,7 +40,6 @@ def logout_view(request):
     
     return redirect('books:index')
 
-
 @login_required(login_url='users:login')
 def view_profile(request):
     user_books = Book.objects.filter(seller=request.user)
@@ -49,3 +49,16 @@ def view_profile(request):
     
     return render(request, 'users/profile.html', context)
 
+
+@login_required(login_url='users:login')
+@user_passes_test(lambda user: user.is_superuser)
+def view_admin_dashboard(request):
+    books = Book.objects.filter(is_verified=False)
+    comments = Comment.objects.filter(is_verified=False)
+
+    context = {
+        'books': books,
+        'comments': comments
+    }
+
+    return render(request, 'users/admin.html', context)

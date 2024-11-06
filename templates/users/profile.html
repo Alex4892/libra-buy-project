@@ -43,8 +43,8 @@
       {% for book in user_books %}
         <tr>
           <td>
-          <a href="{% url 'books:detail_book' book.id %}" class="text-decoration-none text-black">{{ book.name }}</a>
-        </td>
+            <a href="{% url 'books:detail_book' book.id %}" class="text-decoration-none text-black">{{ book.name }}</a>
+          </td>
           <td>{{ book.price }}</td>
           <td>{{ book.quantity }}</td>
           <td>

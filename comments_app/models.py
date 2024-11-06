@@ -3,7 +3,9 @@ from django.contrib.auth import get_user_model
 
 from books_app.models import Book
 
+
 User = get_user_model()
+
 
 class Comment(models.Model):
     book = models.ForeignKey(
@@ -27,7 +29,7 @@ class Comment(models.Model):
     )
     is_verified = models.BooleanField(
         default=False,
-        verbose_name='Проверен администратором?'
+        verbose_name="Проверен администратором?"
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
